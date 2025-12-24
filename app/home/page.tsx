@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { Search, Plus } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { services } from "@/lib/mock-data";
-import { useAuth } from "@/lib/context";
+import { Plus, Search } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { BookingDrawer } from "@/components/booking-drawer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/lib/context";
+import { services } from "@/lib/mock-data";
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,16 +23,14 @@ export default function HomePage() {
   }, [auth.isAuthenticated, router]);
 
   const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchQuery.toLowerCase())
+    service.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
     <div className="min-h-screen bg-white pb-20">
       <div className="sticky top-0 z-10 bg-white px-6 pt-6 pb-4">
         <div className="space-y-4">
-          <h1 className="text-2xl font-bold text-black">
-            What do you need help with?
-          </h1>
+          <h1 className="text-2xl font-bold text-black">What do you need help with?</h1>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
             <Input
@@ -58,7 +56,7 @@ export default function HomePage() {
             },
           }}
         >
-          {filteredServices.map((service, index) => (
+          {filteredServices.map((service) => (
             <motion.div
               key={service.id}
               variants={{
@@ -96,9 +94,7 @@ export default function HomePage() {
                   >
                     {service.icon}
                   </motion.span>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {service.name}
-                  </span>
+                  <span className="text-sm font-semibold text-gray-900">{service.name}</span>
                 </motion.div>
               </Link>
             </motion.div>

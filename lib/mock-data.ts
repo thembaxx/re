@@ -118,4 +118,3 @@ export const mockJobs: Job[] = [
     amount: 120,
   },
 ];
-

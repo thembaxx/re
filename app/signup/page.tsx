@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/lib/context";
-import { ArrowLeft } from "lucide-react";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -42,10 +42,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white px-6 py-12">
-      <Link
-        href="/"
-        className="mb-8 flex items-center text-gray-600 hover:text-black"
-      >
+      <Link href="/" className="mb-8 flex items-center text-gray-600 hover:text-black">
         <ArrowLeft className="mr-2 h-5 w-5" />
         Back
       </Link>
@@ -56,15 +53,13 @@ export default function SignupPage() {
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Role</label>
+            <p className="text-sm font-medium text-gray-700">Role</p>
             <div className="flex gap-4 rounded-xl border border-gray-300 p-1">
               <button
                 type="button"
                 onClick={() => setRole("client")}
                 className={`flex-1 rounded-lg px-4 py-3 text-sm font-semibold transition-colors ${
-                  role === "client"
-                    ? "bg-black text-white"
-                    : "bg-transparent text-gray-600"
+                  role === "client" ? "bg-black text-white" : "bg-transparent text-gray-600"
                 }`}
               >
                 Client
@@ -73,9 +68,7 @@ export default function SignupPage() {
                 type="button"
                 onClick={() => setRole("provider")}
                 className={`flex-1 rounded-lg px-4 py-3 text-sm font-semibold transition-colors ${
-                  role === "provider"
-                    ? "bg-black text-white"
-                    : "bg-transparent text-gray-600"
+                  role === "provider" ? "bg-black text-white" : "bg-transparent text-gray-600"
                 }`}
               >
                 Service Provider
@@ -96,10 +89,7 @@ export default function SignupPage() {
             />
           </div>
           <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="text-sm font-medium text-gray-700">
               Password
             </label>
             <Input
@@ -112,10 +102,7 @@ export default function SignupPage() {
             />
           </div>
           <div className="space-y-2">
-            <label
-              htmlFor="confirmPassword"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
               Confirm Password
             </label>
             <Input
@@ -145,4 +132,3 @@ export default function SignupPage() {
     </div>
   );
 }
-

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { Bell, ChevronRight, CreditCard, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/lib/context";
-import { Bell, CreditCard, LogOut, ChevronRight } from "lucide-react";
 
 export default function SettingsPage() {
   const { auth, logout } = useAuth();
@@ -82,4 +82,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-

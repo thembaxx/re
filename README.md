@@ -5,14 +5,26 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
+# Install dependencies with Bun
+bun install
+
+# Run the dev server
+bun run dev
+# or (npm/yarn/pnpm compatible)
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
+
+## Bun & Biome (linting / formatting)
+
+- Install deps: `bun install`
+- Run dev: `bun run dev`
+- Lint: `bun run lint` (uses Biome)
+- Format: `bun run format` (formats files with Biome)
+- Format check: `bun run format:check` (CI-friendly check)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Calendar as CalendarIcon, Clock, MapPin, XCircle } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -12,18 +14,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { services } from "@/lib/mock-data";
-import { MapPin, Calendar as CalendarIcon, Clock, XCircle } from "lucide-react";
 import { DateTimePicker } from "@/components/ui/scroll-picker";
-import { format } from "date-fns";
+import { services } from "@/lib/mock-data";
 
 export function BookingDrawer({ children }: { children: React.ReactNode }) {
   const [selectedService, setSelectedService] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState("1:30 PM");
   const [location, setLocation] = useState("Home");
   const [isOpen, setIsOpen] = useState(false);
@@ -77,9 +74,7 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
               </div>
               <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 text-gray-700" />
-                <p className="text-sm text-gray-700">
-                  Extra wait time included to meet your ride
-                </p>
+                <p className="text-sm text-gray-700">Extra wait time included to meet your ride</p>
               </div>
               <div className="flex items-center gap-3">
                 <XCircle className="h-5 w-5 text-gray-700" />
@@ -90,9 +85,7 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Service Type
-              </label>
+              <p className="text-sm font-medium text-gray-700">Service Type</p>
               <div className="grid grid-cols-2 gap-3">
                 {services.map((service, index) => (
                   <motion.button
@@ -113,8 +106,7 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
                     }}
                     whileHover={{
                       scale: 1.05,
-                      borderColor:
-                        selectedService === service.id ? "black" : "gray",
+                      borderColor: selectedService === service.id ? "black" : "gray",
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -136,9 +128,7 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                Location
-              </label>
+              <p className="text-sm font-medium text-gray-700">Location</p>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <Input
@@ -155,9 +145,7 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
         <DrawerFooter className="p-6 pt-0">
           <Button
             onClick={handleSubmit}
-            disabled={
-              !selectedService || !selectedDate || !selectedTime || !location
-            }
+            disabled={!selectedService || !selectedDate || !selectedTime || !location}
             className="w-full rounded-xl bg-black py-3.5 text-base font-semibold text-white hover:bg-gray-800"
           >
             Confirm Booking

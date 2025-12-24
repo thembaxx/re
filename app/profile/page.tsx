@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { Edit, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/context";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Star, Edit } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/lib/context";
 
 export default function ProfilePage() {
   const { auth } = useAuth();
@@ -17,19 +17,14 @@ export default function ProfilePage() {
       router.push("/login");
     }
   }, [auth.isAuthenticated, router]);
-  const initials = auth.email
-    ?.split("@")[0]
-    .substring(0, 2)
-    .toUpperCase() || "U";
+  const initials = auth.email?.split("@")[0].substring(0, 2).toUpperCase() || "U";
 
   return (
     <div className="min-h-screen bg-white pb-20">
       <div className="px-6 pt-6">
         <div className="mb-8 flex flex-col items-center">
           <Avatar className="mb-4 h-24 w-24">
-            <AvatarFallback className="bg-gray-200 text-2xl text-black">
-              {initials}
-            </AvatarFallback>
+            <AvatarFallback className="bg-gray-200 text-2xl text-black">{initials}</AvatarFallback>
           </Avatar>
           <h1 className="mb-2 text-2xl font-bold text-black">
             {auth.email?.split("@")[0] || "User"}
@@ -54,9 +49,7 @@ export default function ProfilePage() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-600">Role</p>
-                  <p className="font-semibold text-black capitalize">
-                    {auth.role || "Not set"}
-                  </p>
+                  <p className="font-semibold text-black capitalize">{auth.role || "Not set"}</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-600">Member Since</p>
@@ -85,4 +78,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-

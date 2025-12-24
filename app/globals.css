@@ -76,19 +76,11 @@
   --color-category-badge-cost-background: var(--category-badge-cost-background);
   --color-category-badge-cost-foreground: var(--category-badge-cost-foreground);
 
-  --color-category-badge-delay-background: var(
-    --category-badge-delay-background
-  );
-  --color-category-badge-delay-foreground: var(
-    --category-badge-delay-foreground
-  );
+  --color-category-badge-delay-background: var(--category-badge-delay-background);
+  --color-category-badge-delay-foreground: var(--category-badge-delay-foreground);
 
-  --color-category-badge-protection-background: var(
-    --category-badge-protection-background
-  );
-  --color-category-badge-protection-foreground: var(
-    --category-badge-protection-foreground
-  );
+  --color-category-badge-protection-background: var(--category-badge-protection-background);
+  --color-category-badge-protection-foreground: var(--category-badge-protection-foreground);
 }
 
 :root {

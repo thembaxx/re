@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 
 type UserRole = "client" | "provider" | null;
 type AuthState = {
@@ -38,11 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ auth, login, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
@@ -52,4 +48,3 @@ export function useAuth() {
   }
   return context;
 }
-

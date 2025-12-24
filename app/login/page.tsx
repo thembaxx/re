@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/lib/context";
 import { authClient } from "@/lib/auth-client";
-import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/lib/context";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -43,10 +43,7 @@ export default function LoginPage() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
       >
-        <Link
-          href="/"
-          className="mb-8 flex items-center text-gray-600 hover:text-black"
-        >
+        <Link href="/" className="mb-8 flex items-center text-gray-600 hover:text-black">
           <motion.div whileHover={{ x: -5 }} whileTap={{ scale: 0.95 }}>
             <ArrowLeft className="mr-2 h-5 w-5" />
           </motion.div>
@@ -71,10 +68,7 @@ export default function LoginPage() {
           transition={{ delay: 0.3 }}
         >
           <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="email" className="text-sm font-medium text-gray-700">
               Email
             </label>
             <Input
@@ -87,10 +81,7 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="password" className="text-sm font-medium text-gray-700">
               Password
             </label>
             <Input
@@ -130,9 +121,7 @@ export default function LoginPage() {
             <span className="w-full border-t border-gray-300" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-500">
-              Or continue with
-            </span>
+            <span className="bg-white px-2 text-gray-500">Or continue with</span>
           </div>
         </div>
 
@@ -155,17 +144,12 @@ export default function LoginPage() {
                   });
                 } catch (err) {
                   console.error("Google sign in error:", err);
-                  setError(
-                    "Failed to sign in with Google. Please check your credentials."
-                  );
+                  setError("Failed to sign in with Google. Please check your credentials.");
                 }
               }}
             >
-              <svg
-                className="mr-2 h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor" role="img">
+                <title>Google logo</title>
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                   fill="#4285F4"
@@ -199,17 +183,12 @@ export default function LoginPage() {
                   });
                 } catch (err) {
                   console.error("Facebook sign in error:", err);
-                  setError(
-                    "Failed to sign in with Facebook. Please check your credentials."
-                  );
+                  setError("Failed to sign in with Facebook. Please check your credentials.");
                 }
               }}
             >
-              <svg
-                className="mr-2 h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
+              <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor" role="img">
+                <title>Facebook logo</title>
                 <path
                   d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
                   fill="#1877F2"

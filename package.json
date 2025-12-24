@@ -2,10 +2,31 @@
   "name": "re",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "bun@1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "biome check .",
+    "format": "biome format .",
+    "format:check": "biome format --check ."
+  },
+  "biome": {
+    "root": true,
+    "formatter": true,
+    "files": [
+      "app",
+      "components",
+      "lib",
+      "pages",
+      "src"
+    ],
+    "exclude": [
+      "node_modules",
+      ".next",
+      "public",
+      "build"
+    ]
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",

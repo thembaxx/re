@@ -1,15 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Home, LayoutDashboard, MessageCircle, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import {
-  Home,
-  LayoutDashboard,
-  User,
-  Settings,
-  MessageCircle,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -56,7 +50,7 @@ export function BottomNav() {
                 <motion.div
                   className={cn(
                     "flex flex-col items-center gap-1 rounded-xl px-4 py-2",
-                    isActive ? "text-black" : "text-gray-500"
+                    isActive ? "text-black" : "text-gray-500",
                   )}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -70,9 +64,7 @@ export function BottomNav() {
                   </motion.div>
                   <motion.span
                     className="text-xs font-medium"
-                    animate={
-                      isActive ? { fontWeight: 700 } : { fontWeight: 500 }
-                    }
+                    animate={isActive ? { fontWeight: 700 } : { fontWeight: 500 }}
                   >
                     {item.label}
                   </motion.span>

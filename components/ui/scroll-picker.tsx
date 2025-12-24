@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useCallback, useState } from "react";
-import { format, addDays } from "date-fns";
+import { addDays, format } from "date-fns";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface ScrollPickerItemProps {
@@ -10,22 +10,17 @@ interface ScrollPickerItemProps {
   onClick: () => void;
 }
 
-const ScrollPickerItem = ({
-  value,
-  isSelected,
-  onClick,
-}: ScrollPickerItemProps) => (
-  <div
+const ScrollPickerItem = ({ value, isSelected, onClick }: ScrollPickerItemProps) => (
+  <button
+    type="button"
     className={cn(
       "flex h-12 items-center justify-center text-lg transition-colors",
-      isSelected
-        ? "font-bold text-black"
-        : "font-normal text-gray-400"
+      isSelected ? "font-bold text-black" : "font-normal text-gray-400",
     )}
     onClick={onClick}
   >
     {value}
-  </div>
+  </button>
 );
 
 interface ScrollPickerProps {
@@ -34,11 +29,7 @@ interface ScrollPickerProps {
   onValueChange: (value: string) => void;
 }
 
-const ScrollPicker = ({
-  options,
-  selectedValue,
-  onValueChange,
-}: ScrollPickerProps) => {
+const ScrollPicker = ({ options, selectedValue, onValueChange }: ScrollPickerProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const itemHeight = 48;
 
@@ -46,8 +37,7 @@ const ScrollPicker = ({
     if (scrollRef.current) {
       const selectedIndex = options.indexOf(selectedValue);
       if (selectedIndex !== -1) {
-        scrollRef.current.scrollTop =
-          selectedIndex * itemHeight - itemHeight * 2;
+        scrollRef.current.scrollTop = selectedIndex * itemHeight - itemHeight * 2;
       }
     }
   }, [options, selectedValue]);
@@ -72,10 +62,10 @@ const ScrollPicker = ({
     <div className="relative flex-1">
       <div
         ref={scrollRef}
-        className="no-scrollbar h-[240px] overflow-y-scroll scroll-smooth"
+        className="no-scrollbar h-60 overflow-y-scroll scroll-smooth"
         onScroll={handleScroll}
       >
-        <div className="h-[96px]" />
+        <div className="h-24" />
         {options.map((option) => (
           <ScrollPickerItem
             key={option}
@@ -84,7 +74,7 @@ const ScrollPicker = ({
             onClick={() => onValueChange(option)}
           />
         ))}
-        <div className="h-[96px]" />
+        <div className="h-24" />
       </div>
       <div className="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 border-y border-gray-300 h-12" />
     </div>
@@ -134,7 +124,8 @@ export function DateTimePicker({
     if (selectedTime) {
       const [time, ampm] = selectedTime.split(" ");
       const [hour, minute] = time.split(":");
-      setSelectedHour(parseInt(hour) % 12 === 0 ? "12" : (parseInt(hour) % 12).toString());
+      const parsedHour = parseInt(hour, 10);
+      setSelectedHour(parsedHour % 12 === 0 ? "12" : (parsedHour % 12).toString());
       setSelectedMinute(minute);
       setSelectedAmPm(ampm);
     }
@@ -172,4 +163,3 @@ export function DateTimePicker({
     </div>
   );
 }
-

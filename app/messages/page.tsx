@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/context";
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Send } from "lucide-react";
+import { useAuth } from "@/lib/context";
 
 const mockMessages = [
   {
@@ -62,13 +62,11 @@ export default function MessagesPage() {
       <div className="flex min-h-screen flex-col bg-white pb-20">
         <div className="sticky top-0 z-10 border-b border-gray-200 bg-white px-6 py-4">
           <div className="flex items-center gap-3">
-            <button onClick={() => setSelectedChat(null)} className="text-gray-600">
-              ← Back
+            <button type="button" onClick={() => setSelectedChat(null)} className="text-gray-600">
+              Back
             </button>
             <Avatar className="h-10 w-10">
-              <AvatarFallback className="bg-gray-200 text-black">
-                {chat?.avatar}
-              </AvatarFallback>
+              <AvatarFallback className="bg-gray-200 text-black">{chat?.avatar}</AvatarFallback>
             </Avatar>
             <div>
               <p className="font-semibold text-black">{chat?.name}</p>
@@ -84,9 +82,7 @@ export default function MessagesPage() {
             >
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                  msg.sender === "user"
-                    ? "bg-black text-white"
-                    : "bg-gray-100 text-black"
+                  msg.sender === "user" ? "bg-black text-white" : "bg-gray-100 text-black"
                 }`}
               >
                 <p className="text-sm">{msg.message}</p>
@@ -138,9 +134,7 @@ export default function MessagesPage() {
             >
               <CardContent className="flex items-center gap-4 p-4">
                 <Avatar className="h-12 w-12">
-                  <AvatarFallback className="bg-gray-200 text-black">
-                    {msg.avatar}
-                  </AvatarFallback>
+                  <AvatarFallback className="bg-gray-200 text-black">{msg.avatar}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -162,4 +156,3 @@ export default function MessagesPage() {
     </div>
   );
 }
-
