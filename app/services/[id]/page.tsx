@@ -58,7 +58,7 @@ export default function ServicePage() {
                     <div className="mb-3 flex items-center gap-3">
                       <Avatar className="h-12 w-12">
                         <AvatarFallback className="bg-gray-200 text-black">
-                          {provider.avatar}
+                          {provider.avatarUrl}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
@@ -66,7 +66,7 @@ export default function ServicePage() {
                         <div className="flex items-center gap-1">
                           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                           <span className="text-xs text-gray-600">
-                            {provider.rating} ({provider.reviews})
+                            {provider.rating} ({provider.rating})
                           </span>
                         </div>
                       </div>

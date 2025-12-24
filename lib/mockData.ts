@@ -2,7 +2,7 @@
 import type { JobRequest, ServiceCategory, User } from "@/types";
 
 // 1. Service Categories (for the Home Page Grid)
-export const services: ServiceCategory[] = [
+export const CATEGORIES: ServiceCategory[] = [
   { id: "s1", name: "Plumbing", icon: "Droplets", color: "bg-blue-100" },
   { id: "s2", name: "Electrical", icon: "Zap", color: "bg-yellow-100" },
   { id: "s3", name: "Painting", icon: "PaintBucket", color: "bg-red-100" },
@@ -12,7 +12,7 @@ export const services: ServiceCategory[] = [
 ];
 
 // 2. Users (Top Providers & Current User)
-export const topProviders: User[] = [
+export const MOCK_USERS: User[] = [
   {
     id: "u1",
     name: "Alex Johnson",
@@ -47,7 +47,7 @@ export const topProviders: User[] = [
 ];
 
 // 3. Jobs (For Dashboard & History)
-export const mockJobs: JobRequest[] = [
+export const MOCK_JOBS: JobRequest[] = [
   // Active Request (Show in Carousel)
   {
     id: "j1",

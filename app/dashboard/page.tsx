@@ -24,13 +24,13 @@ export default function DashboardPage() {
   const isClient = auth.role === "client";
 
   const activeJobs = mockJobs.filter(
-    (job) => job.status === "pending" || job.status === "in_progress",
+    (job) => job.status === "PENDING" || job.status === "IN_PROGRESS",
   );
-  const completedJobs = mockJobs.filter((job) => job.status === "completed");
+  const completedJobs = mockJobs.filter((job) => job.status === "COMPLETED");
 
   const totalEarnings = mockJobs
-    .filter((job) => job.amount && job.status === "completed")
-    .reduce((sum, job) => sum + (job.amount || 0), 0);
+    .filter((job) => job.priceEstimated && job.status === "COMPLETED")
+    .reduce((sum, job) => sum + (job.priceEstimated || 0), 0);
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -93,16 +93,16 @@ export default function DashboardPage() {
                     <Card className="rounded-xl border-gray-200">
                       <CardContent className="p-4">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-lg font-semibold text-black">{job.serviceType}</h3>
+                          <h3 className="text-lg font-semibold text-black">{job.title}</h3>
                           <span
                             className={cn(
                               "rounded-full px-3 py-1 text-xs font-medium",
-                              job.status === "in_progress"
+                              job.status === "IN_PROGRESS"
                                 ? "bg-blue-100 text-blue-800"
                                 : "bg-yellow-100 text-yellow-800",
                             )}
                           >
-                            {job.status === "in_progress" ? "In Progress" : "Pending"}
+                            {job.status === "IN_PROGRESS" ? "In Progress" : "Pending"}
                           </span>
                         </div>
 
@@ -110,7 +110,7 @@ export default function DashboardPage() {
                           <div className="flex items-center gap-4 mb-4">
                             <Avatar className="h-12 w-12">
                               <AvatarFallback className="bg-gray-200 text-black">
-                                {provider.avatar}
+                                {provider.avatarUrl}
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1">
@@ -118,18 +118,18 @@ export default function DashboardPage() {
                               <div className="flex items-center text-sm text-gray-600">
                                 <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
                                 <span>{provider.rating}</span>
-                                {provider.carModel && (
+                                {/* {provider.carModel && (
                                   <>
                                     <span className="mx-2">•</span>
                                     <span>{provider.carModel}</span>
                                   </>
-                                )}
+                                )} */}
                               </div>
-                              {provider.licensePlate && (
+                              {/* {provider.licensePlate && (
                                 <p className="text-sm text-gray-600">
                                   License: {provider.licensePlate}
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         )}
@@ -140,7 +140,9 @@ export default function DashboardPage() {
                             {format(new Date(job.date), "MMM dd, yyyy")} at {job.time}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-4">Location: {job.location}</p>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Location: {job.location.address}
+                        </p>
 
                         {isClient && provider && (
                           <motion.div
@@ -180,11 +182,11 @@ export default function DashboardPage() {
         <div>
           <h2 className="mb-4 text-lg font-semibold text-black">History</h2>
           {completedJobs.length === 0 ? (
-            <p className="text-gray-600">No completed jobs</p>
+            <p className="text-gray-600">No COMPLETED jobs</p>
           ) : (
             <div className="space-y-3">
               {completedJobs.map((job) => {
-                const service = services.find((s) => s.name === job.serviceType);
+                const service = services.find((s) => s.name === job.title);
                 return (
                   <Card
                     key={job.id}
@@ -194,13 +196,15 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-4">
                         <span className="text-3xl">{service?.icon || "🔧"}</span>
                         <div className="flex-1">
-                          <p className="font-semibold text-black">{job.serviceType}</p>
+                          <p className="font-semibold text-black">{job.title}</p>
                           <p className="text-sm text-gray-600">
-                            {isClient ? job.providerName : job.clientName} •{" "}
+                            {isClient ? job.providerId : job.serviceId} •{" "}
                             {format(new Date(job.date), "MMM d, yyyy")}
                           </p>
-                          {job.amount && (
-                            <p className="mt-1 text-sm font-semibold text-black">${job.amount}</p>
+                          {job.priceEstimated && (
+                            <p className="mt-1 text-sm font-semibold text-black">
+                              ${job.priceEstimated}
+                            </p>
                           )}
                         </div>
                         <div className="flex items-center gap-2">
