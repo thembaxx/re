@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Drawer,
   DrawerClose,
@@ -20,7 +21,9 @@ import { format } from "date-fns";
 
 export function BookingDrawer({ children }: { children: React.ReactNode }) {
   const [selectedService, setSelectedService] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [selectedTime, setSelectedTime] = useState("1:30 PM");
   const [location, setLocation] = useState("Home");
   const [isOpen, setIsOpen] = useState(false);
@@ -91,20 +94,43 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
                 Service Type
               </label>
               <div className="grid grid-cols-2 gap-3">
-                {services.map((service) => (
-                  <button
+                {services.map((service, index) => (
+                  <motion.button
                     key={service.id}
                     type="button"
                     onClick={() => setSelectedService(service.id)}
-                    className={`rounded-xl border-2 p-4 text-left transition-all ${
+                    className={`rounded-xl border-2 p-4 text-left ${
                       selectedService === service.id
                         ? "border-black bg-black text-white"
-                        : "border-gray-200 bg-white text-gray-900 hover:border-gray-300"
+                        : "border-gray-200 bg-white text-gray-900"
                     }`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: index * 0.05,
+                      type: "spring",
+                      stiffness: 200,
+                    }}
+                    whileHover={{
+                      scale: 1.05,
+                      borderColor:
+                        selectedService === service.id ? "black" : "gray",
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <div className="mb-2 text-2xl">{service.icon}</div>
+                    <motion.div
+                      className="mb-2 text-2xl"
+                      animate={
+                        selectedService === service.id
+                          ? { scale: 1.2, rotate: 5 }
+                          : { scale: 1, rotate: 0 }
+                      }
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      {service.icon}
+                    </motion.div>
                     <div className="text-sm font-semibold">{service.name}</div>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -129,7 +155,9 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
         <DrawerFooter className="p-6 pt-0">
           <Button
             onClick={handleSubmit}
-            disabled={!selectedService || !selectedDate || !selectedTime || !location}
+            disabled={
+              !selectedService || !selectedDate || !selectedTime || !location
+            }
             className="w-full rounded-xl bg-black py-3.5 text-base font-semibold text-white hover:bg-gray-800"
           >
             Confirm Booking
@@ -147,4 +175,3 @@ export function BookingDrawer({ children }: { children: React.ReactNode }) {
     </Drawer>
   );
 }
-

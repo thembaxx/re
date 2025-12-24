@@ -2,11 +2,19 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { useAuth } from "@/lib/context";
 import { mockJobs, services, topProviders } from "@/lib/mock-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, DollarSign, CheckCircle2, Star, MessageCircle, Phone } from "lucide-react";
+import {
+  Clock,
+  DollarSign,
+  CheckCircle2,
+  Star,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
 import { format } from "date-fns";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -59,99 +67,145 @@ export default function DashboardPage() {
             Active {isClient ? "Requests" : "Jobs"}
           </h2>
           {activeJobs.length === 0 ? (
-            <p className="text-gray-600">No active {isClient ? "requests" : "jobs"}</p>
+            <p className="text-gray-600">
+              No active {isClient ? "requests" : "jobs"}
+            </p>
           ) : (
-            <div className="space-y-4">
-              {activeJobs.map((job) => {
-                const service = services.find((s) => s.name === job.serviceType);
-                const provider = topProviders.find((p) => p.id === job.providerId);
+            <motion.div
+              className="space-y-4"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {activeJobs.map((job, index) => {
+                const service = services.find(
+                  (s) => s.name === job.serviceType
+                );
+                const provider = topProviders.find(
+                  (p) => p.id === job.providerId
+                );
                 return (
-                  <Card
+                  <motion.div
                     key={job.id}
-                    className="rounded-xl border-gray-200"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15,
+                        },
+                      },
+                    }}
                   >
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-lg font-semibold text-black">
-                          {job.serviceType}
-                        </h3>
-                        <span
-                          className={cn(
-                            "rounded-full px-3 py-1 text-xs font-medium",
-                            job.status === "in_progress"
-                              ? "bg-blue-100 text-blue-800"
-                              : "bg-yellow-100 text-yellow-800"
-                          )}
-                        >
-                          {job.status === "in_progress"
-                            ? "In Progress"
-                            : "Pending"}
-                        </span>
-                      </div>
+                    <Card className="rounded-xl border-gray-200">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-lg font-semibold text-black">
+                            {job.serviceType}
+                          </h3>
+                          <span
+                            className={cn(
+                              "rounded-full px-3 py-1 text-xs font-medium",
+                              job.status === "in_progress"
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-yellow-100 text-yellow-800"
+                            )}
+                          >
+                            {job.status === "in_progress"
+                              ? "In Progress"
+                              : "Pending"}
+                          </span>
+                        </div>
 
-                      {isClient && provider && (
-                        <div className="flex items-center gap-4 mb-4">
-                          <Avatar className="h-12 w-12">
-                            <AvatarFallback className="bg-gray-200 text-black">
-                              {provider.avatar}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1">
-                            <p className="text-lg font-medium text-black">
-                              {provider.name}
-                            </p>
-                            <div className="flex items-center text-sm text-gray-600">
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                              <span>{provider.rating}</span>
-                              {provider.carModel && (
-                                <>
-                                  <span className="mx-2">•</span>
-                                  <span>{provider.carModel}</span>
-                                </>
+                        {isClient && provider && (
+                          <div className="flex items-center gap-4 mb-4">
+                            <Avatar className="h-12 w-12">
+                              <AvatarFallback className="bg-gray-200 text-black">
+                                {provider.avatar}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <p className="text-lg font-medium text-black">
+                                {provider.name}
+                              </p>
+                              <div className="flex items-center text-sm text-gray-600">
+                                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                                <span>{provider.rating}</span>
+                                {provider.carModel && (
+                                  <>
+                                    <span className="mx-2">•</span>
+                                    <span>{provider.carModel}</span>
+                                  </>
+                                )}
+                              </div>
+                              {provider.licensePlate && (
+                                <p className="text-sm text-gray-600">
+                                  License: {provider.licensePlate}
+                                </p>
                               )}
                             </div>
-                            {provider.licensePlate && (
-                              <p className="text-sm text-gray-600">
-                                License: {provider.licensePlate}
-                              </p>
-                            )}
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                      <div className="flex items-center text-gray-600 text-sm mb-2">
-                        <Clock className="h-4 w-4 mr-2" />
-                        <span>
-                          {format(new Date(job.date), "MMM dd, yyyy")} at {job.time}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Location: {job.location}
-                      </p>
-
-                      {isClient && provider && (
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            className="flex-1 rounded-xl border-gray-300 text-black"
-                          >
-                            <MessageCircle className="h-4 w-4 mr-2" />
-                            Message
-                          </Button>
-                          <Button
-                            variant="outline"
-                            className="flex-1 rounded-xl border-gray-300 text-black"
-                          >
-                            <Phone className="h-4 w-4 mr-2" />
-                            Call
-                          </Button>
+                        <div className="flex items-center text-gray-600 text-sm mb-2">
+                          <Clock className="h-4 w-4 mr-2" />
+                          <span>
+                            {format(new Date(job.date), "MMM dd, yyyy")} at{" "}
+                            {job.time}
+                          </span>
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Location: {job.location}
+                        </p>
+
+                        {isClient && provider && (
+                          <motion.div
+                            className="flex gap-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          >
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Button
+                                variant="outline"
+                                className="flex-1 rounded-xl border-gray-300 text-black"
+                              >
+                                <MessageCircle className="h-4 w-4 mr-2" />
+                                Message
+                              </Button>
+                            </motion.div>
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Button
+                                variant="outline"
+                                className="flex-1 rounded-xl border-gray-300 text-black"
+                              >
+                                <Phone className="h-4 w-4 mr-2" />
+                                Call
+                              </Button>
+                            </motion.div>
+                          </motion.div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           )}
         </div>
         <div>
@@ -161,7 +215,9 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-3">
               {completedJobs.map((job) => {
-                const service = services.find((s) => s.name === job.serviceType);
+                const service = services.find(
+                  (s) => s.name === job.serviceType
+                );
                 return (
                   <Card
                     key={job.id}
@@ -169,16 +225,16 @@ export default function DashboardPage() {
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center gap-4">
-                        <span className="text-3xl">{service?.icon || "🔧"}</span>
+                        <span className="text-3xl">
+                          {service?.icon || "🔧"}
+                        </span>
                         <div className="flex-1">
                           <p className="font-semibold text-black">
                             {job.serviceType}
                           </p>
                           <p className="text-sm text-gray-600">
-                            {isClient
-                              ? job.providerName
-                              : job.clientName}{" "}
-                            • {format(new Date(job.date), "MMM d, yyyy")}
+                            {isClient ? job.providerName : job.clientName} •{" "}
+                            {format(new Date(job.date), "MMM d, yyyy")}
                           </p>
                           {job.amount && (
                             <p className="mt-1 text-sm font-semibold text-black">
@@ -207,4 +263,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

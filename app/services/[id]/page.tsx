@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { useAuth } from "@/lib/context";
 import { services, topProviders } from "@/lib/mock-data";
 import { Card, CardContent } from "@/components/ui/card";
@@ -46,11 +47,20 @@ export default function ServicePage() {
             Top Providers
           </h2>
           <div className="flex gap-4 overflow-x-auto pb-4">
-            {topProviders.map((provider) => (
-              <Card
+            {topProviders.map((provider, index) => (
+              <motion.div
                 key={provider.id}
-                className="min-w-[200px] flex-shrink-0 rounded-xl border-gray-200"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: index * 0.1,
+                  type: "spring",
+                  stiffness: 100,
+                }}
               >
+                <Card
+                  className="min-w-[200px] flex-shrink-0 rounded-xl border-gray-200"
+                >
                 <CardContent className="p-4">
                   <div className="mb-3 flex items-center gap-3">
                     <Avatar className="h-12 w-12">
@@ -73,11 +83,17 @@ export default function ServicePage() {
                   <p className="mb-3 text-sm text-gray-600">
                     ${provider.hourlyRate}/hr
                   </p>
-                  <Button className="w-full rounded-xl bg-black text-white hover:bg-gray-800">
-                    Book Now
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button className="w-full rounded-xl bg-black text-white hover:bg-gray-800">
+                      Book Now
+                    </Button>
+                  </motion.div>
                 </CardContent>
               </Card>
+              </motion.div>
             ))}
           </div>
         </div>

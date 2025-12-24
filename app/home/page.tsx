@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import { Search, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -44,34 +46,91 @@ export default function HomePage() {
         </div>
       </div>
       <div className="px-6 py-6">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {filteredServices.map((service) => (
-            <Link
+        <motion.div
+          className="grid grid-cols-2 gap-4 sm:grid-cols-3"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+        >
+          {filteredServices.map((service, index) => (
+            <motion.div
               key={service.id}
-              href={`/services/${service.id}`}
-              className="group"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15,
+                  },
+                },
+              }}
             >
-              <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-black hover:shadow-md">
-                <span className="mb-3 text-4xl">{service.icon}</span>
-                <span className="text-sm font-semibold text-gray-900">
-                  {service.name}
-                </span>
-              </div>
-            </Link>
+              <Link href={`/services/${service.id}`} className="group block">
+                <motion.div
+                  className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6"
+                  whileHover={{
+                    scale: 1.05,
+                    borderColor: "black",
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
+                >
+                  <motion.span
+                    className="mb-3 text-4xl"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {service.icon}
+                  </motion.span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    {service.name}
+                  </span>
+                </motion.div>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-      <div className="fixed bottom-24 right-6 z-40">
+      <motion.div
+        className="fixed bottom-24 right-6 z-40"
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          delay: 0.3,
+        }}
+      >
         <BookingDrawer>
-          <Button
-            size="lg"
-            className="h-14 w-14 rounded-full bg-black shadow-lg hover:bg-gray-800"
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <Plus className="h-6 w-6 text-white" />
-          </Button>
+            <Button
+              size="lg"
+              className="h-14 w-14 rounded-full bg-black shadow-lg hover:bg-gray-800"
+            >
+              <Plus className="h-6 w-6 text-white" />
+            </Button>
+          </motion.div>
         </BookingDrawer>
-      </div>
+      </motion.div>
     </div>
   );
 }
-
